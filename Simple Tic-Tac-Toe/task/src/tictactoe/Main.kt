@@ -19,7 +19,8 @@ class GameTicTacToe(val board: MutableList<MutableList<Char>> = MutableList(3){M
         do {
             do {
                 println("Enter the coordinates:")
-                val input = readLine()!!.split(" ")
+                val input: MutableList<String> = readLine()!!.split(" ").toMutableList()
+                input.removeAll { it == "" }
             } while (!checkInputAndCoordinatesAndPlaceDot(input))
         } while (!checkWinAndDrawChangeDotIfFalse())
     }
@@ -29,6 +30,10 @@ class GameTicTacToe(val board: MutableList<MutableList<Char>> = MutableList(3){M
             return board[input[0].toInt() - 1][input[1].toInt() - 1] == '_'
         }
         var bool = false
+        if (input.size != 2) {
+            println("Coordinates must consist of two values divided by space, like this: (1 1)")
+            return bool
+        }
         for (i in input) {
             if (!i.matches(Regex("\\d+")) || i.isEmpty()) {
                 println("You should enter numbers!")
@@ -105,9 +110,3 @@ class GameTicTacToe(val board: MutableList<MutableList<Char>> = MutableList(3){M
 fun main() {
     val game = GameTicTacToe()
 }
-
-
-
-
-
-
